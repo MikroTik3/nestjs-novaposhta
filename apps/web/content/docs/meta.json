@@ -1,0 +1,29 @@
+{
+	"title": "Документація",
+	"pages": [
+		"---Початок роботи---",
+		"getting-started/installation",
+		"getting-started/introduction",
+
+		"---Підтримувані моделі---",
+		"models/address",
+		"models/additional-service",
+		"models/car-call-general",
+		"models/common",
+		"models/common-general",
+		"models/counterparty",
+		"models/internet-document",
+		"models/inventory-general",
+		"models/loyalty-user",
+		"models/payment",
+		"models/scan-sheet",
+		"models/tracking-document",
+
+		"---Інше---",
+		"others/loyalty-card-data",
+		"others/update-register-description",
+		"others/register-invoice-short-list",
+		"others/counterparty-by-phone",
+		"others/money-transfers"
+	]
+}

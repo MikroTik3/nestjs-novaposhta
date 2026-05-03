@@ -1,0 +1,33 @@
+{
+	"name": "nestjs-monobank",
+	"version": "0.0.6",
+	"private": true,
+	"license": "MIT",
+	"author": {
+		"name": "MikroTik_2",
+		"url": "https://docenko.vercel.app"
+	},
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+			"dev": "turbo run dev",
+			"build": "turbo run build",
+			"dev:web": "turbo run dev --filter=web",
+			"build:web": "turbo run build --filter=web",
+			"build:packages": "turbo run build --filter=nestjs-monobank",
+			"publish:packages": "npm run build:packages && lerna publish",
+			"update": "npm update",
+			"upgrade:all": "npm i -g npm-check-updates && ncu -u && npm install"
+	},
+	"devDependencies": {
+		"prettier": "^3.7.4",
+		"turbo": "^2.9.8",
+		"typescript": "5.9.2"
+	},
+	"packageManager": "pnpm@9.0.0",
+	"engines": {
+		"node": ">=20.9.0"
+	}
+}
