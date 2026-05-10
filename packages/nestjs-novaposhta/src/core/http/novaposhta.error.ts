@@ -1,10 +1,13 @@
 export class NovaposhtaError extends Error {
 	public constructor(
-		public code: string,
-		public description: string,
-		public data?: any
+		public readonly code: string,
+		public readonly description: string,
+		public readonly data?: unknown
 	) {
 		super(description)
-		this.name = "NovaposhtaError"
+
+		this.name = NovaposhtaError.name
+
+		Object.setPrototypeOf(this, NovaposhtaError.prototype)
 	}
 }

@@ -2,10 +2,10 @@ import {
 	NOVAPOSHTA_API_URL,
 } from '../config'
 import { NovaposhtaError } from './novaposhta.error'
-import { Inject, Injectable } from '@nestjs/common'
-import { Dispatcher, request } from 'undici'
+import { Inject, Injectable} from '@nestjs/common'
+import { request } from 'undici'
 
-import { NovaposhtaOptionsSymbol, type NovaposhtaModuleOptions } from '../../common/interfaces'
+import {NovaposhtaOptionsSymbol, type NovaposhtaModuleOptions, type NovaposhtaResponse} from '../../common/interfaces'
 
 @Injectable()
 export class NovaposhtaHttpClient {
@@ -14,55 +14,40 @@ export class NovaposhtaHttpClient {
 		private readonly config: NovaposhtaModuleOptions
 	) {}
 
-	public async request<T>(options: {
-		method: Dispatcher.HttpMethod
-		url: string
-		data?: any
-		params?: any
-	}): Promise<T> {
-	     const url = this.buildUrl(options.url, options.params)
-
-		const response = await request(url, {
-                     method: options.method,
-                     headersTimeout: 15000,
-                     bodyTimeout: 15000,
-                     headers: {
-                            'Content-Type': 'application/json',
-                     },
-                     body: JSON.stringify({
-                            apiKey: this.config.apiKey,
-                            ...options.data,
-                     }),
+	public async request<T>(modelName: string, calledMethod: string, methodProperties: Record<string, any> = {}): Promise<T[]> {
+		const response = await request(NOVAPOSHTA_API_URL, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			headersTimeout: 15000,
+			bodyTimeout: 15000,
+			body: JSON.stringify({
+				apiKey: this.config.apiKey,
+				modelName,
+				calledMethod,
+				methodProperties,
+			}),
 		})
 
 		if (response.statusCode >= 400) {
 			const text = await response.body.text()
-			throw new NovaposhtaError('novaposhta_error', text, text)
+
+			throw new NovaposhtaError('novaposhta_http_error',
+				text,
+				text
+			)
 		}
 
-		return (await response.body.json()) as T
-	}
+		const data = (await response.body.json()) as NovaposhtaResponse<T>
 
-	public get<T>(url: string, params?: any) {
-          return this.request<T>({ method: 'GET', url, params })
-	}
-
-	public post<T>(url: string, data?: any) {
-          return this.request<T>({ method: 'POST', url, data })
-	}
-
-	public delete<T>(url: string, params?: any) {
-		return this.request<T>({ method: 'DELETE', url, params })
-	}
-
-	private buildUrl(url: string, params?: any): string {
-		let fullUrl = `${NOVAPOSHTA_API_URL}${url}`
- 
-		if (params && typeof params === 'object') {
-			const qp = new URLSearchParams(params)
-			fullUrl += `?${qp.toString()}`
+		if (!data.success) {
+			throw new NovaposhtaError('novaposhta_api_error',
+				data.errors?.join(', ') || 'Nova Poshta API Error',
+				data.errors
+			)
 		}
 
-		return fullUrl
+		return data.data
 	}
 }
