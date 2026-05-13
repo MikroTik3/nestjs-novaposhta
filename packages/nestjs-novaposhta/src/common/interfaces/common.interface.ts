@@ -18,3 +18,7 @@ export interface PaginationParams {
 export interface SearchParams {
     FindByString?: string;
 }
+
+export interface LanguageParams {
+    Language?: "ua" | "ru";
+}

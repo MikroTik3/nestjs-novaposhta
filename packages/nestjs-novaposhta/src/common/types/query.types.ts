@@ -1,3 +1,5 @@
-import type { PaginationParams, SearchParams } from "../interfaces";
+import type { LanguageParams, PaginationParams, SearchParams } from "../interfaces";
 
-export type QueryParams = PaginationParams & SearchParams;
+export type QueryParams = PaginationParams 
+      & SearchParams 
+      & LanguageParams;

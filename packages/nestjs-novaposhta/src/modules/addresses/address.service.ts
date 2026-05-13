@@ -6,7 +6,17 @@ import type {
       CityResponse, 
       CityRequest, 
       WarehouseRequest, 
-      WarehouseResponse 
+      WarehouseResponse,
+      WarehouseTypesResponse,
+      WarehouseSettlementsRequest,
+      SearchSettlementsRequest,
+      SearchSettlementStreetsRequest,
+      SearchSettlementStreetsResponse,
+      SearchSettlementsResponse,
+      StreetResponse,
+      StreetRequest,
+      SettlementResponse,
+      SettlementRequest
 } from "./interfaces";
 
 @Injectable()
@@ -26,30 +36,30 @@ export class AddressService {
       }
 
       public async getWarehouses(data: WarehouseRequest): Promise<WarehouseResponse[]> {
-            return this.http.request<WarehouseResponse>(this.MODEL_NAME, "getWarehouse", data)
+            return this.http.request<WarehouseResponse>(this.MODEL_NAME, "getWarehouses", data)
       }
 
-      public async getWarehouseTypes() {
-            return this.http.request(this.MODEL_NAME, "getWarehouseTypes")
+      public async getWarehouseTypes(): Promise<WarehouseTypesResponse[]> {
+            return this.http.request<WarehouseTypesResponse>(this.MODEL_NAME, "getWarehouseTypes")
       }
 
-      public async getWarehouseSettlements() {
-            return this.http.request(this.MODEL_NAME, "getWarehouseSettlements")
+      public async getWarehouseSettlements(data: WarehouseSettlementsRequest): Promise<WarehouseResponse[]> {
+            return this.http.request<WarehouseResponse>(this.MODEL_NAME, "getWarehouses", data)
       }
 
-      public async searchSettlements() {
-            return this.http.request(this.MODEL_NAME, "searchSettlements")
+      public async searchSettlements(data: SearchSettlementsRequest): Promise<SearchSettlementsResponse[]> {
+            return this.http.request<SearchSettlementsResponse>(this.MODEL_NAME, "searchSettlements", data)
       }
 
-      public async searchSettlementStreets() {
-            return this.http.request(this.MODEL_NAME, "searchSettlementStreets")
+      public async searchSettlementStreets(data: SearchSettlementStreetsRequest): Promise<SearchSettlementStreetsResponse[]> {
+            return this.http.request<SearchSettlementStreetsResponse>(this.MODEL_NAME, "searchSettlementStreets", data)
       }
 
-      public async getStreet() {
-            return this.http.request(this.MODEL_NAME, "getStreet")
+      public async getStreet(data: StreetRequest): Promise<StreetResponse[]> {
+            return this.http.request<StreetResponse>(this.MODEL_NAME, "getStreet", data)
       }
-      
-      public async getSettlement() {
-            return this.http.request(this.MODEL_NAME, "getSettlement")
+
+      public async getSettlement(data: SettlementRequest): Promise<SettlementResponse[]> {
+            return this.http.request<SettlementResponse>(this.MODEL_NAME, "getSettlement", data)
       }
 }
