@@ -9,6 +9,7 @@ import { NovaposhtaService } from "./novaposhta.service";
 import { NovaposhtaHttpClient } from "./core/http/novaposhta.http-client";
 
 import { AddressModule } from "./modules/addresses/address.module";
+import { TrackingModule } from "./modules/tracking/tracking.module";
 
 @Global()
 @Module({})
@@ -17,7 +18,8 @@ export class NovaposhtaModule {
             return {
                   module: NovaposhtaModule,
                   imports: [
-                        AddressModule
+                        AddressModule,
+                        TrackingModule
                   ],
                   providers: [
                         {
@@ -42,7 +44,8 @@ export class NovaposhtaModule {
                         module: NovaposhtaModule,
                         imports: [
                               ...(options.imports || []),
-                              AddressModule
+                              AddressModule,
+                              TrackingModule
                         ],
                         providers: [
                               {
