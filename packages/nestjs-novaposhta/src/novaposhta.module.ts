@@ -10,6 +10,7 @@ import { NovaposhtaHttpClient } from "./core/http/novaposhta.http-client";
 
 import { AddressModule } from "./modules/addresses/address.module";
 import { TrackingModule } from "./modules/tracking/tracking.module";
+import { PaymentModule } from "./modules/payment/payment.module";
 
 @Global()
 @Module({})
@@ -19,7 +20,8 @@ export class NovaposhtaModule {
                   module: NovaposhtaModule,
                   imports: [
                         AddressModule,
-                        TrackingModule
+                        TrackingModule,
+                        PaymentModule
                   ],
                   providers: [
                         {
@@ -45,7 +47,8 @@ export class NovaposhtaModule {
                         imports: [
                               ...(options.imports || []),
                               AddressModule,
-                              TrackingModule
+                              TrackingModule,
+                              PaymentModule
                         ],
                         providers: [
                               {
